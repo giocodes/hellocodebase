@@ -12,13 +12,21 @@ const RepoSelector = React.createClass({
     // window.document.getElementById("omniBox").className="col-sm-4";
     }
   },
-
+  checkRepoUrl(repoUrl){
+    return (repoUrl.slice(0,19)==='https://github.com/'||repoUrl.slice(0,18)==='http://github.com/') ? true : false
+  },
   handleSubmit(e){
     e.preventDefault();
     let repo = this.refs.repo.value;
     console.log(repo)
-    browserHistory.push('/?repo='+repo)
-    this.fetchRepo(repo);
+    if(this.checkRepo){
+      browserHistory.push('/?repo='+repo)
+      this.fetchRepo(repo);
+    }
+    else{
+      console.log('we got an invalid url')
+      this.refs.repo.value = "Invalid Github! Please enter valid URL!"
+    }
   },
   fetchRepo(repoUrl){
     this.props.requestRepoContents(repoUrl);
@@ -53,7 +61,7 @@ const RepoSelector = React.createClass({
             <input type="submit" hidden />
           </div>
         </form>
-      </div> 
+      </div>
       <div id="githubForm" className="">
         <form ref="usernameForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
