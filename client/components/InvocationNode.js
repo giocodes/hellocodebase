@@ -10,6 +10,7 @@ class InvocationNode extends PaperNode {
   constructor(project, xPos, yPos) {
     super(...arguments)
     this.group.addChild(this.text);
+    this.isActiveNode = false;
 
   }
 
@@ -44,16 +45,21 @@ class InvocationNode extends PaperNode {
 
     this.group.onClick = function(event){
       //first child is the path object
-      if(!(this.children[0].shadowBlur === 12)){
-        this.children[0].shadowColor = '#8aff3d';
-        this.children[0].shadowBlur = 12;
-        toggleHighlighted(thisNode.nodeId)
+      if(!thisNode.isActiveNode){
+        if(!(this.children[0].shadowBlur === 12)){
+          this.children[0].shadowColor = '#8aff3d';
+          this.children[0].shadowBlur = 12;
+          this.children[0].fillColor = '#459045'
+          this.children[0].strokeColor = '#459045'
 
-      }
-      else{
-        console.log('else on click is working')
-        this.children[0].shadowBlur = 0;
-        toggleHighlighted(0)
+          toggleHighlighted(thisNode.nodeId)
+        }
+        else{
+          this.children[0].shadowBlur = 0;
+          this.children[0].fillColor = '#b6d2dd';
+          this.children[0].strokeColor = '#b6d2dd';
+          toggleHighlighted(0)
+        }
       }
     }
 
@@ -72,6 +78,7 @@ class InvocationNode extends PaperNode {
   }
 
   colorAsActive(){
+    this.isActiveNode = true;
     this.path.fillColor = '#b3c623';
     this.path.strokeColor = new Color(255,255,0);
   }

@@ -35,19 +35,23 @@ const FunctionTree = React.createClass({
     }
 
     if (this.paper.highlightedNodeId !== nextProps.highlightedNodeId){
-      this.clearHighlighting(nextProps.highlightedNodeId)
+      this.clearHighlighting(nextProps.highlightedNodeId, nextProps.activeNodeId)
     }
 
   },
 
-    clearHighlighting: function(newHighlightedNodeId){
+    clearHighlighting: function(newHighlightedNodeId, activeNodeId){
       let activeLayer = this.paper.getActiveLayer();
         // activeLayer.children.filter(child => return)
+      console.log('heres the activelayer ', activeLayer)
       let groups = activeLayer.children.filter(child => child.constructor === paper.Group)
+      console.log('heres the groups ', groups)
       groups.forEach(group =>
           {
-            if(group.nodeId !== newHighlightedNodeId){
+            if(group.nodeId !== newHighlightedNodeId && group.nodeId !== activeNodeId){
               group.children[0].shadowBlur = 0;
+              group.children[0].fillColor = '#b6d2dd';
+              group.children[0].strokeColor = '#b6d2dd';
             }
           }
       )

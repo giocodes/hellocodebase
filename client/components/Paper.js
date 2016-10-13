@@ -33,6 +33,7 @@ class Paper {
   drawTree(startingNodeId, nodeList) {
     const startingNode = nodeList[startingNodeId-1];
     let paperNode = this.drawNode(startingNode, this.center.x, this.center.y + this.topPadding, this.maxNodeHeight, 'center');
+    console.log('heres the active node information, ', paperNode)
     paperNode.colorAsActive();
     this.drawConnectedNodes(paperNode, nodeList, true);
     this.drawConnectedNodes(paperNode, nodeList, false);
